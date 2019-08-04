@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <title>Search</title>
+</head>
+<body>
+<p id="text">
+    იყო არაბეთს როსტევან, მეფე ღმრთისაგან სვიანი, მაღალი, უხვი, მდაბალი, ლაშქარ-მრავალი, ყმიანი. მოსამართლე და მოწყალე, მორჭმული, განგებიანი, თვით მეომარი უებრო, კვლა მოუბარი წყლიანი.
+</p>
+<p id="copy">
+    იყო არაბეთს როსტევან, მეფე ღმრთისაგან სვიანი, მაღალი, უხვი, მდაბალი, ლაშქარ-მრავალი, ყმიანი. მოსამართლე და მოწყალე, მორჭმული, განგებიანი, თვით მეომარი უებრო, კვლა მოუბარი წყლიანი.
+</p>
+<input type="text" id="myText"  value="" onkeyup="highlighter()" >
+<!--<button onclick="highlighter()" >Try it</button>;-->
+
+<script>
+
+    function substring(str, fullstr)
+    {
+        let arr=[-1];
+        arr.pop();
+        let substr;
+        for (let i = 0; i < fullstr.length; i++) {
+            substr = true;
+            for (let j = 0; j < str.length; j++) {
+                if (fullstr[i + j] != str[j]) {
+                    substr = false;
+                    break;
+                }
+
+            }
+            if(substr) arr.push(i) ;
+        }
+        return arr;
+    }
+function highlighter(){
+    let newstr="";
+    let fullstr;
+    fullstr = document.getElementById("copy").innerHTML;
+    let str = document.getElementById("myText").value;
+    let arr =  substring(str, fullstr);
+    let index=arr.shift();
+    console.log(index);
+    for(let i=0; i<fullstr.length; i++){
+        if(i==index) {
+            let newIndex=arr.shift();
+            newstr += "<span class='highlight'>";
+            newstr+=str;
+            newstr+="</span>";
+            i+=str.length-1;
+            index=newIndex;
+            continue;
+        }
+        newstr+=fullstr[i];
+    }
+    document.getElementById("text").innerHTML = newstr;
+}
+</script>
+</body>
+</html>
